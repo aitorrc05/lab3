@@ -181,3 +181,8 @@ jobs:
             -var="image_tag=${{ env.IMAGE_TAG }}"
 
       - name: Smoke test (production)
+        working-directory: iac
+        run: |
+          APP_URL=$(terraform output -raw app_url)
+          echo "Testing $APP_URL"
+          curl -fsS "$APP_URL" | head -n 20
